@@ -1,13 +1,18 @@
+import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class CuidapetTextFormField extends StatelessWidget {
   final String label;
   final bool obscureText;
   final ValueNotifier<bool> _obscureTextVN;
+  final TextEditingController? controller;
+  final FormFieldValidator<String>? validator;
   CuidapetTextFormField({
     Key? key,
     required this.label,
     this.obscureText = false,
+    this.controller,
+    this.validator,
   })  : _obscureTextVN = ValueNotifier(obscureText),
         super(key: key);
 
@@ -17,7 +22,9 @@ class CuidapetTextFormField extends StatelessWidget {
         valueListenable: _obscureTextVN,
         builder: (context, obscureTextVNvalue, child) {
           return TextFormField(
-            obscureText: obscureText,
+            controller: controller,
+            validator: validator,
+            obscureText: obscureTextVNvalue,
             decoration: InputDecoration(
                 labelText: label,
                 labelStyle: const TextStyle(fontSize: 15, color: Colors.black),
@@ -36,7 +43,9 @@ class CuidapetTextFormField extends StatelessWidget {
                           _obscureTextVN.value = !obscureTextVNvalue;
                         },
                         icon: Icon(
-                            obscureTextVNvalue ? Icons.lock : Icons.lock_open),
+                          obscureTextVNvalue ? Icons.lock : Icons.lock_open,
+                          color: context.primaryColor,
+                        ),
                       )
                     : null),
           );

@@ -28,3 +28,8 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+
+  fonts:
+    - family: CuidapetIcons
+      fonts:
+        - asset: assets/fonts/CuidapetIcons.ttf
