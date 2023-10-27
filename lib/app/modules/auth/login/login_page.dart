@@ -1,8 +1,12 @@
+import 'package:cuidapet_mobile/app/core/ui/extensions/size_screen_extensions.dart';
+import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
 import 'package:cuidapet_mobile/app/core/ui/icons/cuidapet_icons.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/cuidapet_default_button.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/cuidapet_textform_field.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/rounded_button_with_icon.dart';
 import 'package:flutter/material.dart';
+part "widgets/login_form.dart";
+part 'widgets/login_register_buttons.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,73 +16,68 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _nameEC = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 12),
-              CuidapetTextFormField(
-                label: "Login",
-                obscureText: false,
-                controller: _nameEC,
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "Valor obrigatório";
-                  }
-                  return null;
-                },
+              SizedBox(height: 50.h),
+              Center(
+                child: Image.asset(
+                  "assets/images/logo.png",
+                  width: 162.w,
+                  fit: BoxFit.fill,
+                ),
               ),
-              const SizedBox(height: 12),
-              Text(_nameEC.text),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState?.validate();
-                },
-                child: const Text("Validar"),
-              ),
-              const SizedBox(height: 12),
-              CuidapetDefaultButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text("Clicou")));
-                },
-                label: "Entrar",
-              ),
-              const SizedBox(height: 12),
-              RoundedButtonWithIcon(
-                onTap: () {},
-                width: 200,
-                color: Colors.blue,
-                icon: CuidapetIcons.facebook,
-                label: "Facebook",
-              ),
-              const SizedBox(height: 12),
-              RoundedButtonWithIcon(
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Clicou no google")));
-                },
-                width: 200,
-                color: Colors.orange,
-                icon: CuidapetIcons.google,
-                label: "Google",
-              ),
+              const SizedBox(height: 20),
+              const _LoginForm(),
+              const SizedBox(height: 8),
+              const _OrSeparator(),
+              const SizedBox(height: 8),
+              const _LoginRegisterButtons()
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _OrSeparator extends StatelessWidget {
+  const _OrSeparator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Divider(
+            color: context.primaryColor,
+            thickness: 1,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "OU",
+            style: TextStyle(
+              color: context.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20.sp,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Divider(
+            color: context.primaryColor,
+            thickness: 1,
+          ),
+        ),
+      ],
     );
   }
 }
