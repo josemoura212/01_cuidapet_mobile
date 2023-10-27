@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579365344622",
+    "project_id": "cuidapet-ea346",
+    "storage_bucket": "cuidapet-ea346.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579365344622:android:2faf548d009805ed84dd7f",
+        "android_client_info": {
+          "package_name": "app.b4a.mangatrix.cuidapet_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ9Vsvbn-WmADSyXdPdsrNKN2Z8kKuiOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
