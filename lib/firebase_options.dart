@@ -56,6 +56,7 @@ class DefaultFirebaseOptions {
     projectId: 'cuidapet-ea346',
     authDomain: 'cuidapet-ea346.firebaseapp.com',
     storageBucket: 'cuidapet-ea346.appspot.com',
+    measurementId: 'G-HTESXKBB1K',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
