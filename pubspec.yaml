@@ -9,9 +9,12 @@ environment:
 dependencies:
   asuka: ^2.2.0
   dio: ^5.3.3
+  firebase_analytics: ^10.6.2
   firebase_core: ^2.20.0
+  firebase_remote_config: ^4.3.2
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_mobx: ^2.1.0+1
   flutter_modular: ">5.0.0 <6.0.0"
   flutter_screenutil: ^5.9.0
@@ -29,6 +32,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - .env
 
   fonts:
     - family: CuidapetIcons
