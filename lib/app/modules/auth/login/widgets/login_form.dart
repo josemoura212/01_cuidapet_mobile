@@ -11,8 +11,18 @@ class _LoginFormState extends State<_LoginForm> {
   final _loginEC = TextEditingController();
   final _passwordEC = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _loginEC.dispose();
+    _passwordEC.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<LoginController>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -20,16 +30,32 @@ class _LoginFormState extends State<_LoginForm> {
           CuidapetTextFormField(
             label: "Login",
             controller: _loginEC,
+            validator: Validatorless.multiple([
+              Validatorless.required("Campo obrigatório"),
+              Validatorless.email("E-mail inválido"),
+            ]),
           ),
           const SizedBox(height: 20),
           CuidapetTextFormField(
             label: "Senha",
             obscureText: true,
             controller: _passwordEC,
+            validator: Validatorless.multiple([
+              Validatorless.required("Campo obrigatório"),
+              Validatorless.min(6, "Mínimo de 6 caracteres"),
+            ]),
           ),
           const SizedBox(height: 20),
           CuidapetDefaultButton(
-            onPressed: () {},
+            onPressed: () {
+              final formValid = _formKey.currentState?.validate() ?? false;
+              if (formValid) {
+                controller.login(
+                  login: _loginEC.text,
+                  password: _passwordEC.text,
+                );
+              }
+            },
             label: "Entrar",
           ),
         ],

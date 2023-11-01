@@ -30,7 +30,7 @@ class _RegisterFormState extends State<_RegisterForm> {
             label: "Login",
             controller: _loginEC,
             validator: Validatorless.multiple([
-              Validatorless.required("Login obrigatorio"),
+              Validatorless.required("Campo obrigatório"),
               Validatorless.email("Login deve ser um e-mail valido"),
             ]),
             textInputAction: TextInputAction.next,
@@ -41,8 +41,8 @@ class _RegisterFormState extends State<_RegisterForm> {
             obscureText: true,
             controller: _passwordEC,
             validator: Validatorless.multiple([
-              Validatorless.required("Senha obrigatoria"),
-              Validatorless.min(6, "Senha deve contem no minomo 6 caracteres"),
+              Validatorless.required("Campo obrigatório"),
+              Validatorless.min(6, "Mínimo de 6 caracteres"),
             ]),
             textInputAction: TextInputAction.next,
           ),
@@ -51,10 +51,9 @@ class _RegisterFormState extends State<_RegisterForm> {
             label: "Confirmar Senha",
             obscureText: true,
             validator: Validatorless.multiple([
-              Validatorless.required("Confirma senha obrigatorio"),
-              Validatorless.min(
-                  6, "Confirma senha deve contem no minomo 6 caracteres"),
-              Validatorless.compare(_passwordEC, "Senhas nao conferem"),
+              Validatorless.required("Campo obrigatório"),
+              Validatorless.min(6, "Mínimo de 6 caracteres"),
+              Validatorless.compare(_passwordEC, "Campos não conferem"),
             ]),
             textInputAction: TextInputAction.send,
           ),

@@ -1,3 +1,4 @@
+import 'package:cuidapet_mobile/app/core/helpers/unfocus.dart';
 import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -8,14 +9,16 @@ class CuidapetTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final TextInputAction? textInputAction;
-  CuidapetTextFormField({
-    Key? key,
-    required this.label,
-    this.obscureText = false,
-    this.controller,
-    this.validator,
-    this.textInputAction,
-  })  : _obscureTextVN = ValueNotifier(obscureText),
+  final Function(PointerDownEvent)? onTapOutSide;
+  CuidapetTextFormField(
+      {Key? key,
+      required this.label,
+      this.obscureText = false,
+      this.controller,
+      this.validator,
+      this.textInputAction,
+      this.onTapOutSide})
+      : _obscureTextVN = ValueNotifier(obscureText),
         super(key: key);
 
   @override
@@ -28,6 +31,7 @@ class CuidapetTextFormField extends StatelessWidget {
             controller: controller,
             validator: validator,
             obscureText: obscureTextVNvalue,
+            onTapOutside: onTapOutSide ?? (_) => context.unFocus(),
             decoration: InputDecoration(
                 labelText: label,
                 labelStyle: const TextStyle(fontSize: 15, color: Colors.black),
