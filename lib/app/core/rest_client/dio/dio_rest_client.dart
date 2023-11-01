@@ -134,7 +134,6 @@ class DioRestClient implements RestClient {
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
-      print('response: ${response.statusCode}');
 
       return _dioResponseConverter(response);
     } on DioException catch (e) {
