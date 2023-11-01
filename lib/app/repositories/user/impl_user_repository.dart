@@ -3,8 +3,6 @@ import 'package:cuidapet_mobile/app/core/exceptions/user_exists_exception.dart';
 import 'package:cuidapet_mobile/app/core/logger/app_logger.dart';
 import 'package:cuidapet_mobile/app/core/rest_client/rest_client.dart';
 import 'package:cuidapet_mobile/app/core/rest_client/rest_client_exception.dart';
-import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 
 import './user_repository.dart';
 
