@@ -10,8 +10,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 class AuthModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.lazySingleton<UserRepository>((i) => ImplUserRepository()),
-        Bind.lazySingleton<UserServices>((i) => ImplUserServices()),
+        Bind.lazySingleton<UserRepository>(
+            (i) => ImplUserRepository(log: i(), restClient: i())),
+        Bind.lazySingleton<UserServices>(
+            (i) => ImplUserServices(log: i(), userRepository: i())),
       ];
 
   @override
