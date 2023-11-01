@@ -20,6 +20,7 @@ dependencies:
   flutter_modular: ">5.0.0 <6.0.0"
   flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^9.0.0
+  http: ^1.1.0
   logger: ^2.0.2+1
   mobx: ^2.2.1
   shared_preferences: ^2.2.2
