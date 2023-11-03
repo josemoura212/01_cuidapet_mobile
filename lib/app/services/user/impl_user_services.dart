@@ -1,6 +1,8 @@
 import 'package:cuidapet_mobile/app/core/exceptions/failure_exception.dart';
 import 'package:cuidapet_mobile/app/core/exceptions/user_exists_exception.dart';
 import 'package:cuidapet_mobile/app/core/exceptions/user_not_exists_exception.dart';
+import 'package:cuidapet_mobile/app/core/helpers/constantes.dart';
+import 'package:cuidapet_mobile/app/core/local_storage/local_storage.dart';
 import 'package:cuidapet_mobile/app/core/logger/app_logger.dart';
 import 'package:cuidapet_mobile/app/repositories/user/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,11 +12,15 @@ import './user_services.dart';
 class ImplUserServices implements UserServices {
   final AppLogger _log;
   final UserRepository _userRepository;
+  final LocalStorage _localStorage;
 
   ImplUserServices(
-      {required AppLogger log, required UserRepository userRepository})
+      {required AppLogger log,
+      required UserRepository userRepository,
+      required LocalStorage localStorage})
       : _log = log,
-        _userRepository = userRepository;
+        _userRepository = userRepository,
+        _localStorage = localStorage;
   @override
   Future<void> register({
     required String email,
@@ -53,6 +59,12 @@ class ImplUserServices implements UserServices {
               message:
                   "E-mail não confirmado, por favor verifique seu e-mail, se não encontrar verifique a caixa de spam");
         }
+        final accessToken =
+            await _userRepository.login(email: email, password: password);
+        await _saveAccessToken(accessToken);
+        final xx = await _localStorage
+            .read<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY);
+        print('xx: $xx');
       } else {
         throw FailureException(
             message: "Metodo de login incorreto, utilize outro metodo");
@@ -62,4 +74,7 @@ class ImplUserServices implements UserServices {
       throw FailureException(message: "E-mail ou senha inválidos!!!");
     }
   }
+
+  Future<void> _saveAccessToken(String accessToken) => _localStorage
+      .write<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY, accessToken);
 }

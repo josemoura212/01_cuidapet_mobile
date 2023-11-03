@@ -6,4 +6,6 @@ class Constantes {
       "rest_client_connect_timeout";
   static const ENV_REST_CLIENT_RECEIVE_TIMEOUT_KEY =
       "rest_client_receive_timeout";
+  static const LOCAL_STORAGE_ACCESS_TOKEN_KEY =
+      "local_storage_access_token_key";
 }
