@@ -62,9 +62,6 @@ class ImplUserServices implements UserServices {
         final accessToken =
             await _userRepository.login(email: email, password: password);
         await _saveAccessToken(accessToken);
-        final xx = await _localStorage
-            .read<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY);
-        print('xx: $xx');
       } else {
         throw FailureException(
             message: "Metodo de login incorreto, utilize outro metodo");
