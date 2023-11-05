@@ -12,7 +12,20 @@
           "package_name": "app.b4a.mangatrix.cuidapet_mobile"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "579365344622-pnr57rg4f2n4v5d2k50pi9a619rmsps4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.b4a.mangatrix.cuidapet_mobile",
+            "certificate_hash": "cadbe377d6b367bf26481a71cc2f9bb093a1c0c0"
+          }
+        },
+        {
+          "client_id": "579365344622-geenb6i8ij7i7la93qapqaijdd29fi31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBQ9Vsvbn-WmADSyXdPdsrNKN2Z8kKuiOQ"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579365344622-geenb6i8ij7i7la93qapqaijdd29fi31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

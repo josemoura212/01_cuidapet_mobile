@@ -11,7 +11,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 class CoreModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.lazySingleton((i) => AuthStore(), export: true),
         Bind.lazySingleton<AppLogger>((i) => AppLoggerImpl(), export: true),
         Bind.lazySingleton<LocalStorage>(
             (i) => SharedPreferencesLocalStorageImpl(),
@@ -23,6 +22,13 @@ class CoreModule extends Module {
             (i) => DioRestClient(
                   localStorage: i(),
                   log: i(),
+                  authStore: i(),
+                ),
+            export: true),
+        Bind.lazySingleton(
+            (i) => AuthStore(
+                  localStorage: i(),
+                  localSecureStorage: i(),
                 ),
             export: true),
       ];

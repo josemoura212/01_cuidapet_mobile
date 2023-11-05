@@ -1,17 +1,23 @@
 import 'package:cuidapet_mobile/app/core/helpers/constantes.dart';
+import 'package:cuidapet_mobile/app/modules/core/auth/auth_store.dart';
 import 'package:dio/dio.dart';
 
 import 'package:cuidapet_mobile/app/core/local_storage/local_storage.dart';
 import 'package:cuidapet_mobile/app/core/logger/app_logger.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthInterceptor extends Interceptor {
   final LocalStorage _localStorage;
   final AppLogger _log;
+  final AuthStore _authStore;
+
   AuthInterceptor({
     required LocalStorage localStorage,
     required AppLogger log,
+    required AuthStore authStore,
   })  : _localStorage = localStorage,
-        _log = log;
+        _log = log,
+        _authStore = authStore;
 
   @override
   void onRequest(
@@ -23,6 +29,8 @@ class AuthInterceptor extends Interceptor {
       final accessToken = await _localStorage
           .read<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY);
       if (accessToken == null) {
+        _authStore.logout();
+        FirebaseAuth.instance.signOut();
         return handler.reject(
           DioException(
             requestOptions: options,
@@ -41,13 +49,11 @@ class AuthInterceptor extends Interceptor {
 
   // @override
   // void onResponse(Response response, ResponseInterceptorHandler handler) {
-  //   // TODO: implement onResponse
   //   super.onResponse(response, handler);
   // }
 
   // @override
   // void onError(DioException err, ErrorInterceptorHandler handler) {
-  //   // TODO: implement onError
   //   super.onError(err, handler);
   // }
 }
