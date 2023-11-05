@@ -13,14 +13,17 @@ class ImplUserServices implements UserServices {
   final AppLogger _log;
   final UserRepository _userRepository;
   final LocalStorage _localStorage;
+  final LocalSecureStorage _localSecureStorage;
 
-  ImplUserServices(
-      {required AppLogger log,
-      required UserRepository userRepository,
-      required LocalStorage localStorage})
-      : _log = log,
+  ImplUserServices({
+    required AppLogger log,
+    required UserRepository userRepository,
+    required LocalStorage localStorage,
+    required LocalSecureStorage localSecureStorage,
+  })  : _log = log,
         _userRepository = userRepository,
-        _localStorage = localStorage;
+        _localStorage = localStorage,
+        _localSecureStorage = localSecureStorage;
   @override
   Future<void> register({
     required String email,
@@ -62,6 +65,8 @@ class ImplUserServices implements UserServices {
         final accessToken =
             await _userRepository.login(email: email, password: password);
         await _saveAccessToken(accessToken);
+        await _confirmLogin();
+        await _getUserData();
       } else {
         throw FailureException(
             message: "Metodo de login incorreto, utilize outro metodo");
@@ -74,4 +79,18 @@ class ImplUserServices implements UserServices {
 
   Future<void> _saveAccessToken(String accessToken) => _localStorage
       .write<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY, accessToken);
+
+  Future<void> _confirmLogin() async {
+    final confirmLoginModel = await _userRepository.confirmLogin();
+    await _saveAccessToken(confirmLoginModel.accessToken);
+    await _localSecureStorage.write(
+        Constantes.LOCAL_SECURE_STORAGE_REFRESH_TOKEN_KEY,
+        confirmLoginModel.refreshToken);
+  }
+
+  Future<void> _getUserData() async {
+    final userModel = await _userRepository.getUserLogged();
+    await _localStorage.write<String>(
+        Constantes.LOCAL_STORAGE_USER_LOGGED_DATA, userModel.toJson());
+  }
 }
