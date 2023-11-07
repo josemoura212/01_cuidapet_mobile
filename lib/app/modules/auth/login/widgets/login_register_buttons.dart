@@ -13,7 +13,9 @@ class _LoginRegisterButtons extends StatelessWidget {
       direction: Axis.horizontal,
       children: [
         RoundedButtonWithIcon(
-          onTap: () {},
+          onTap: () {
+            controller.socialLogin(SocialLoginType.facebook);
+          },
           width: .42.sw,
           color: const Color(0xff4267b3),
           icon: CuidapetIcons.facebook,
