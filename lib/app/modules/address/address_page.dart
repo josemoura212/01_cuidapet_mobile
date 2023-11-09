@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
+import 'package:cuidapet_mobile/app/models/place_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 part 'widgets/address_item.dart';
+part 'widgets/address_search_widget.dart';
 
 class AddressPage extends StatelessWidget {
   const AddressPage({Key? key}) : super(key: key);
@@ -20,23 +24,13 @@ class AddressPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Adicione ou erscolha um endereco",
+                "Adicione ou escolha um endereço",
                 style: context.textTheme.headlineMedium?.copyWith(
                     color: Colors.black, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              Material(
-                elevation: 10,
-                borderRadius: BorderRadius.circular(20),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
+              const _AddressSearchWidget(),
+              const SizedBox(height: 30),
               const ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Colors.red,

@@ -9,7 +9,7 @@ class AuthStore = AuthStoreBase with _$AuthStore;
 
 abstract class AuthStoreBase with Store {
   final LocalStorage _localStorage;
-  final LocalSecureStorage _localSecureStorage;
+  // final LocalSecureStorage _localSecureStorage;
 
   @readonly
   UserModel? _userLogged;
@@ -17,8 +17,8 @@ abstract class AuthStoreBase with Store {
   AuthStoreBase({
     required LocalStorage localStorage,
     required LocalSecureStorage localSecureStorage,
-  })  : _localStorage = localStorage,
-        _localSecureStorage = localSecureStorage;
+  }) : _localStorage = localStorage;
+  // _localSecureStorage = localSecureStorage;
 
   @action
   Future<void> loadUserLogged() async {
