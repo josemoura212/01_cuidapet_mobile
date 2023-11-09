@@ -1,7 +1,6 @@
-import 'package:cuidapet_mobile/app/core/life_cycle/page_life_cycle_state.dart';
-import 'package:cuidapet_mobile/app/modules/home/home_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,22 +18,13 @@ class _HomePageState extends PageLifeCycleState<HomeController, HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-            child: const Text("Logout"),
-          ),
-          TextButton(
-            onPressed: () async {
-              // final categoriesResponse =
-              //     await Modular.get<RestClient>().auth().get("/categories/");
-            },
-            child: const Text("Teste Refresh Token"),
-          ),
-        ],
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+          },
+          child: const Text("Logout"),
+        ),
       ),
     );
   }
