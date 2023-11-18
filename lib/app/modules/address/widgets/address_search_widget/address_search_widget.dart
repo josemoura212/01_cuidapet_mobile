@@ -1,4 +1,4 @@
-part of '../address_page.dart';
+part of '../../address_page.dart';
 
 class _AddressSearchWidget extends StatefulWidget {
   const _AddressSearchWidget();

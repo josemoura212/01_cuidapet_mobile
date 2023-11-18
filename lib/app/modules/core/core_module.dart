@@ -6,6 +6,10 @@ import 'package:cuidapet_mobile/app/core/logger/app_logger_impl.dart';
 import 'package:cuidapet_mobile/app/core/rest_client/dio/dio_rest_client.dart';
 import 'package:cuidapet_mobile/app/core/rest_client/rest_client.dart';
 import 'package:cuidapet_mobile/app/modules/core/auth/auth_store.dart';
+import 'package:cuidapet_mobile/app/repositories/address/address_repository.dart';
+import 'package:cuidapet_mobile/app/repositories/address/impl_address_repository.dart';
+import 'package:cuidapet_mobile/app/services/address/address_service.dart';
+import 'package:cuidapet_mobile/app/services/address/impl_address_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CoreModule extends Module {
@@ -32,5 +36,13 @@ class CoreModule extends Module {
                   localSecureStorage: i(),
                 ),
             export: true),
+        Bind.lazySingleton<AddressRepository>(
+          (i) => ImplAddressRepository(),
+          export: true,
+        ),
+        Bind.lazySingleton<AddressService>(
+          (i) => ImplAddressService(addressRepository: i()),
+          export: true,
+        ),
       ];
 }

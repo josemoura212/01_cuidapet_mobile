@@ -18,7 +18,8 @@ dependencies:
     sdk: flutter
   flutter_dotenv: ^5.1.0
   flutter_facebook_auth: ^6.0.2
-  flutter_google_places_sdk: ^0.3.7
+  google_places_rest_api:
+    path: ../google_places_rest_api/
   flutter_mobx: ^2.1.0+1
   flutter_modular: ">5.0.0 <6.0.0"
   flutter_screenutil: ^5.9.0
