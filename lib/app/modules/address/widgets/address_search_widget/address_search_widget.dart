@@ -1,13 +1,28 @@
 part of '../../address_page.dart';
 
+typedef AddressSelectedCallBack = void Function(PlaceModel);
+
 class _AddressSearchWidget extends StatefulWidget {
-  const _AddressSearchWidget();
+  final AddressSelectedCallBack addressSelectedCallBack;
+  const _AddressSearchWidget({required this.addressSelectedCallBack});
 
   @override
   State<_AddressSearchWidget> createState() => _AddressSearchWidgetState();
 }
 
 class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
+  final _searchTextEC = TextEditingController();
+  final _searchTextFN = FocusNode();
+
+  final controller = Modular.get<AddressSearchWidgetController>();
+
+  @override
+  void dispose() {
+    _searchTextEC.dispose();
+    _searchTextFN.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -21,6 +36,8 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
       borderRadius: BorderRadius.circular(20),
       child: TypeAheadFormField<PlaceModel>(
         textFieldConfiguration: TextFieldConfiguration(
+          controller: _searchTextEC,
+          focusNode: _searchTextFN,
           decoration: InputDecoration(
             prefixIcon: const Icon(
               Icons.location_on,
@@ -44,43 +61,19 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
     );
   }
 
-  FutureOr<Iterable<PlaceModel>> _suggestionsCallback(String pattern) {
-    debugPrint("Endereço digitado $pattern");
-    return [
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-      PlaceModel(
-        address: "Av Paulista,200",
-        lat: 123.0,
-        lgn: 12154.0,
-      ),
-    ];
+  FutureOr<List<PlaceModel>> _suggestionsCallback(String pattern) async {
+    if (pattern.isNotEmpty) {
+      final places = await controller.searchAddress(pattern);
+
+      return places;
+    }
+    return <PlaceModel>[];
   }
 
-  void _onSuggestionSelected(PlaceModel suggestion) {}
+  void _onSuggestionSelected(PlaceModel suggestion) {
+    _searchTextEC.text = suggestion.address;
+    widget.addressSelectedCallBack(suggestion);
+  }
 }
 
 class _ItemTile extends StatelessWidget {
