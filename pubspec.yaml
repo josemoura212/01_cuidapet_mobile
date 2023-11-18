@@ -18,13 +18,14 @@ dependencies:
     sdk: flutter
   flutter_dotenv: ^5.1.0
   flutter_facebook_auth: ^6.0.2
-  google_places_rest_api:
-    path: ../google_places_rest_api/
   flutter_mobx: ^2.1.0+1
   flutter_modular: ">5.0.0 <6.0.0"
   flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^9.0.0
   flutter_typeahead: ^4.8.0
+  google_maps_flutter: ^2.5.0
+  google_places_rest_api:
+    path: ../google_places_rest_api/
   google_sign_in: ^6.1.5
   logger: ^2.0.2+1
   mobx: ^2.2.1
