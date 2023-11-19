@@ -1,13 +1,13 @@
 class PlaceModel {
   String address;
   double lat;
-  double lgn;
+  double lng;
   PlaceModel({
     required this.address,
     required this.lat,
-    required this.lgn,
+    required this.lng,
   });
 
   @override
-  String toString() => 'PlaceModel(address: $address, lat: $lat, lgn: $lgn)';
+  String toString() => 'PlaceModel(address: $address, lat: $lat, lgn: $lng)';
 }

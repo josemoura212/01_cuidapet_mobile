@@ -20,6 +20,15 @@ class ImplAddressService implements AddressService {
   Future<List<AddressEntity>> getAddres() => _addressRepository.getAddres();
 
   @override
-  Future<int> saveAddres(AddressEntity entity) =>
-      _addressRepository.saveAddres(entity);
+  Future<AddressEntity> saveAddres(PlaceModel place, String additional) async {
+    final addressEntity = AddressEntity(
+      id: null,
+      address: place.address,
+      lat: place.lat,
+      lng: place.lng,
+      additional: additional,
+    );
+    final addresId = await _addressRepository.saveAddres(addressEntity);
+    return addressEntity.copyWith(id: () => addresId);
+  }
 }

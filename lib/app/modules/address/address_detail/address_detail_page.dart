@@ -45,7 +45,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
               initialCameraPosition: CameraPosition(
                 target: LatLng(
                   place.lat,
-                  place.lgn,
+                  place.lng,
                 ),
                 zoom: 16,
               ),
@@ -54,7 +54,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
                   markerId: const MarkerId("AddressId"),
                   position: LatLng(
                     place.lat,
-                    place.lgn,
+                    place.lng,
                   ),
                   infoWindow: InfoWindow(
                     title: place.address,
