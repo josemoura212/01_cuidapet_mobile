@@ -1,3 +1,4 @@
+import 'package:cuidapet_mobile/app/core/database/sqlite_connection_factory.dart';
 import 'package:cuidapet_mobile/app/core/local_storage/flutter_secure_storage/flutter_secure_storage_local_storage_impl.dart';
 import 'package:cuidapet_mobile/app/core/local_storage/local_storage.dart';
 import 'package:cuidapet_mobile/app/core/local_storage/shared_preferences/shared_preferences_local_storage_impl.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class CoreModule extends Module {
   @override
   List<Bind> get binds => [
+        Bind.lazySingleton((i) => SqliteConnectionFactory(), export: true),
         Bind.lazySingleton<AppLogger>((i) => AppLoggerImpl(), export: true),
         Bind.lazySingleton<LocalStorage>(
             (i) => SharedPreferencesLocalStorageImpl(),
@@ -37,7 +39,7 @@ class CoreModule extends Module {
                 ),
             export: true),
         Bind.lazySingleton<AddressRepository>(
-          (i) => ImplAddressRepository(),
+          (i) => ImplAddressRepository(sqliteConnectionFactory: i()),
           export: true,
         ),
         Bind.lazySingleton<AddressService>(

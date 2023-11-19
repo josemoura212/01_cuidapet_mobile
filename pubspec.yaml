@@ -29,7 +29,10 @@ dependencies:
   google_sign_in: ^6.1.5
   logger: ^2.0.2+1
   mobx: ^2.2.1
+  path: ^1.8.3
   shared_preferences: ^2.2.2
+  sqflite: ^2.3.0
+  synchronized: ^3.1.0
   validatorless: ^1.2.3
 
 dev_dependencies:
