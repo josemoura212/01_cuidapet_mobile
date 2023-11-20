@@ -27,18 +27,21 @@ class ImplAddressRepository implements AddressRepository {
     final addressResult =
         await googlePlace.findAutocomplete(query: addressPattern);
 
-    final candidates = addressResult.results;
+    final candidates = addressResult?.results;
 
-    return candidates.map<PlaceModel>((searchResult) {
-      final location = searchResult.geometry?.location;
-      final address = searchResult.formattedAddress;
+    if (candidates != null) {
+      return candidates.map<PlaceModel>((searchResult) {
+        final location = searchResult.geometry?.location;
+        final address = searchResult.formattedAddress;
 
-      return PlaceModel(
-        address: address ?? "",
-        lat: location?.lat ?? 0,
-        lng: location?.lng ?? 0,
-      );
-    }).toList();
+        return PlaceModel(
+          address: address ?? "",
+          lat: location?.lat ?? 0,
+          lng: location?.lng ?? 0,
+        );
+      }).toList();
+    }
+    return <PlaceModel>[];
   }
 
   @override
