@@ -6,11 +6,11 @@ import 'package:cuidapet_mobile/app/repositories/address/address_repository.dart
 
 import './address_service.dart';
 
-class ImplAddressService implements AddressService {
+class AddressServiceImpl implements AddressService {
   final AddressRepository _addressRepository;
   final LocalStorage _localStorage;
 
-  ImplAddressService({
+  AddressServiceImpl({
     required AddressRepository addressRepository,
     required LocalStorage localStorage,
   })  : _addressRepository = addressRepository,

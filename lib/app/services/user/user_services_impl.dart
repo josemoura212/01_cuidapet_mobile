@@ -12,14 +12,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './user_services.dart';
 
-class ImplUserServices implements UserServices {
+class UserServicesImpl implements UserServices {
   final AppLogger _log;
   final UserRepository _userRepository;
   final LocalStorage _localStorage;
   final LocalSecureStorage _localSecureStorage;
   final SocialRepository _socialRepository;
 
-  ImplUserServices({
+  UserServicesImpl({
     required AppLogger log,
     required UserRepository userRepository,
     required LocalStorage localStorage,

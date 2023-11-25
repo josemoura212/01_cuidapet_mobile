@@ -13,11 +13,11 @@ import 'package:flutter/foundation.dart';
 
 import './user_repository.dart';
 
-class ImplUserRepository implements UserRepository {
+class UserRepositoryImpl implements UserRepository {
   final RestClient _restClient;
   final AppLogger _log;
 
-  ImplUserRepository({required RestClient restClient, required AppLogger log})
+  UserRepositoryImpl({required RestClient restClient, required AppLogger log})
       : _restClient = restClient,
         _log = log;
 

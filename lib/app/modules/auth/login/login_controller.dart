@@ -4,7 +4,7 @@ import 'package:cuidapet_mobile/app/core/logger/app_logger.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/loader.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/messages.dart';
 import 'package:cuidapet_mobile/app/models/social_login_type_enum.dart';
-import 'package:cuidapet_mobile/app/services/user/impl_user_services.dart';
+import 'package:cuidapet_mobile/app/services/user/user_services_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'login_controller.g.dart';
@@ -12,11 +12,11 @@ part 'login_controller.g.dart';
 class LoginController = LoginControllerBase with _$LoginController;
 
 abstract class LoginControllerBase with Store {
-  final ImplUserServices _userServices;
+  final UserServicesImpl _userServices;
   final AppLogger _log;
 
   LoginControllerBase({
-    required ImplUserServices userServices,
+    required UserServicesImpl userServices,
     required AppLogger log,
   })  : _userServices = userServices,
         _log = log;

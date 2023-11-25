@@ -8,9 +8,9 @@ import 'package:google_places_rest_api/google_places_rest_api.dart';
 
 import './address_repository.dart';
 
-class ImplAddressRepository implements AddressRepository {
+class AddressRepositoryImpl implements AddressRepository {
   final SqliteConnectionFactory _sqliteConnectionFactory;
-  ImplAddressRepository({
+  AddressRepositoryImpl({
     required SqliteConnectionFactory sqliteConnectionFactory,
   }) : _sqliteConnectionFactory = sqliteConnectionFactory;
   @override

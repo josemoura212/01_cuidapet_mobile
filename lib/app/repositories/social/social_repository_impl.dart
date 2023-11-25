@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import './social_repository.dart';
 
-class ImplSocialRepository implements SocialRepository {
+class SocialRepositoryImpl implements SocialRepository {
   @override
   Future<SocialNetworkModel> facebookLogin() async {
     final facebookAuth = FacebookAuth.instance;
