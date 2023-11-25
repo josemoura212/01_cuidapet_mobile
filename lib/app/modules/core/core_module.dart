@@ -26,25 +26,24 @@ class CoreModule extends Module {
             export: true),
         Bind.lazySingleton<RestClient>(
             (i) => DioRestClient(
-                  localStorage: i(),
-                  log: i(),
-                  authStore: i(),
-                  localSecureStorage: i(),
-                ),
-            export: true),
-        Bind.lazySingleton(
-            (i) => AuthStore(
-                  localStorage: i(),
-                  localSecureStorage: i(),
-                ),
+                localStorage: i(),
+                log: i(),
+                authStore: i(),
+                localSecureStorage: i()),
             export: true),
         Bind.lazySingleton<AddressRepository>(
           (i) => ImplAddressRepository(sqliteConnectionFactory: i()),
           export: true,
         ),
         Bind.lazySingleton<AddressService>(
-          (i) => ImplAddressService(addressRepository: i()),
-          export: true,
-        ),
+            (i) =>
+                ImplAddressService(addressRepository: i(), localStorage: i()),
+            export: true),
+        Bind.lazySingleton(
+            (i) => AuthStore(
+                localStorage: i(),
+                localSecureStorage: i(),
+                addressService: i()),
+            export: true),
       ];
 }

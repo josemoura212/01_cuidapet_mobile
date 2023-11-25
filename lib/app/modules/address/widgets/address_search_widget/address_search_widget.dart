@@ -4,7 +4,12 @@ typedef AddressSelectedCallBack = void Function(PlaceModel);
 
 class _AddressSearchWidget extends StatefulWidget {
   final AddressSelectedCallBack addressSelectedCallBack;
-  const _AddressSearchWidget({required this.addressSelectedCallBack});
+  final PlaceModel? place;
+  const _AddressSearchWidget({
+    super.key,
+    required this.addressSelectedCallBack,
+    this.place,
+  });
 
   @override
   State<_AddressSearchWidget> createState() => _AddressSearchWidgetState();
@@ -15,6 +20,15 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
   final _searchTextFN = FocusNode();
 
   final controller = Modular.get<AddressSearchWidgetController>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.place != null) {
+      _searchTextEC.text = widget.place?.address ?? "";
+      _searchTextFN.requestFocus();
+    }
+  }
 
   @override
   void dispose() {

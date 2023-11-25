@@ -5,7 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 class HomeModuleDart extends Module {
   @override
   List<Bind> get binds => [
-        Bind.lazySingleton((i) => HomeController()),
+        Bind.lazySingleton(
+          (i) => HomeController(addressService: i()),
+        ),
       ];
 
   @override

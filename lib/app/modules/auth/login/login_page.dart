@@ -13,7 +13,7 @@ part "widgets/login_form.dart";
 part 'widgets/login_register_buttons.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {

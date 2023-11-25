@@ -7,9 +7,8 @@ import 'package:mobx/mobx.dart';
 
 class AuthHomePage extends StatefulWidget {
   final AuthStore _authStore;
-  const AuthHomePage({Key? key, required AuthStore authStore})
-      : _authStore = authStore,
-        super(key: key);
+  const AuthHomePage({super.key, required AuthStore authStore})
+      : _authStore = authStore;
 
   @override
   State<AuthHomePage> createState() => _AuthHomePageState();

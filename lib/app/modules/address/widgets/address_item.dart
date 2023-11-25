@@ -2,8 +2,10 @@ part of '../address_page.dart';
 
 class _AddressItem extends StatelessWidget {
   final AddressEntity addressEntity;
+  final VoidCallback onTap;
   const _AddressItem({
     required this.addressEntity,
+    required this.onTap,
   });
 
   @override
@@ -11,6 +13,7 @@ class _AddressItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
+        onTap: onTap,
         leading: const CircleAvatar(
           backgroundColor: Colors.white,
           radius: 30,

@@ -9,13 +9,13 @@ class RoundedButtonWithIcon extends StatelessWidget {
   final IconData icon;
   final String label;
   const RoundedButtonWithIcon({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.width,
     required this.color,
     required this.icon,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

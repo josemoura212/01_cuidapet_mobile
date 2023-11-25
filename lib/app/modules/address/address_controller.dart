@@ -3,6 +3,7 @@
 import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/life_cycle/controller_life_cycle.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/loader.dart';
+import 'package:cuidapet_mobile/app/core/ui/widgets/messages.dart';
 import 'package:cuidapet_mobile/app/models/place_model.dart';
 import 'package:cuidapet_mobile/app/services/address/address_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -25,6 +26,9 @@ abstract class AddressControllerBase with Store, ControllerLifeCycle {
 
   @readonly
   LocationPermission? _locationPermission;
+
+  @readonly
+  PlaceModel? _placeModel;
 
   AddressControllerBase({
     required AddressService addressService,
@@ -87,7 +91,30 @@ abstract class AddressControllerBase with Store, ControllerLifeCycle {
     goToAddressDetail(placeModel);
   }
 
-  void goToAddressDetail(PlaceModel place) {
-    Modular.to.pushNamed("/address/detail/", arguments: place);
+  Future<void> goToAddressDetail(PlaceModel place) async {
+    final address =
+        await Modular.to.pushNamed("/address/detail/", arguments: place);
+    if (address is PlaceModel) {
+      // Editando um endereço
+      _placeModel = address;
+    } else if (address is AddressEntity) {
+      // Salvando um endereço
+      selectAddress(address);
+    }
+  }
+
+  Future<void> selectAddress(AddressEntity addressEntity) async {
+    await _addressService.selectAddress(addressEntity);
+    Modular.to.pop(addressEntity);
+  }
+
+  Future<bool> addressWasSelected() async {
+    final address = await _addressService.getAddressSelected();
+    if (address != null) {
+      return true;
+    } else {
+      Messages.alert("Por favor selecione ou cadastre um endereço");
+      return false;
+    }
   }
 }

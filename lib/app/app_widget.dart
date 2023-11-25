@@ -6,7 +6,7 @@ import 'package:asuka/asuka.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppWidget extends StatefulWidget {
-  const AppWidget({Key? key}) : super(key: key);
+  const AppWidget({super.key});
 
   @override
   State<AppWidget> createState() => _AppWidgetState();

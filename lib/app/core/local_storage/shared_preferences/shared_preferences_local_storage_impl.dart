@@ -33,16 +33,16 @@ class SharedPreferencesLocalStorageImpl implements LocalStorage {
     final sharedPreferences = await _instance;
 
     switch (V) {
-      case String:
+      case const (String):
         await sharedPreferences.setString(key, value as String);
         break;
-      case int:
+      case const (int):
         await sharedPreferences.setInt(key, value as int);
         break;
-      case double:
+      case const (double):
         await sharedPreferences.setDouble(key, value as double);
         break;
-      case bool:
+      case const (bool):
         await sharedPreferences.setBool(key, value as bool);
         break;
       case const (List<String>):

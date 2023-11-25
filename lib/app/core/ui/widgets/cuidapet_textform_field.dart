@@ -11,15 +11,14 @@ class CuidapetTextFormField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Function(PointerDownEvent)? onTapOutSide;
   CuidapetTextFormField(
-      {Key? key,
+      {super.key,
       required this.label,
       this.obscureText = false,
       this.controller,
       this.validator,
       this.textInputAction,
       this.onTapOutSide})
-      : _obscureTextVN = ValueNotifier(obscureText),
-        super(key: key);
+      : _obscureTextVN = ValueNotifier(obscureText);
 
   @override
   Widget build(BuildContext context) {
