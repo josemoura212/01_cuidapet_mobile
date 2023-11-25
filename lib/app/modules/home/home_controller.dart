@@ -1,25 +1,46 @@
 import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/life_cycle/controller_life_cycle.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/loader.dart';
+import 'package:cuidapet_mobile/app/core/ui/widgets/messages.dart';
+import 'package:cuidapet_mobile/app/models/supplier_category_model.dart';
 import 'package:cuidapet_mobile/app/services/address/address_service.dart';
+import 'package:cuidapet_mobile/app/services/supplier/supplier_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'home_controller.g.dart';
+
+enum SupplierPageType { list, grid }
 
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store, ControllerLifeCycle {
   final AddressService _addressService;
+  final SupplierService _supplierService;
+
   @readonly
   AddressEntity? _addressEntity;
 
-  HomeControllerBase({required AddressService addressService})
-      : _addressService = addressService;
+  @readonly
+  var _listCategories = <SupplierCategoryModel>[];
+
+  @readonly
+  var _supplierPageTypeSelected = SupplierPageType.list;
+
+  HomeControllerBase(
+      {required AddressService addressService,
+      required SupplierService supplierService})
+      : _addressService = addressService,
+        _supplierService = supplierService;
+
   @override
   Future<void> onReady() async {
-    Loader.show();
-    _getAddressSelected();
-    Loader.hide();
+    try {
+      Loader.show();
+      await _getAddressSelected();
+      await _getCategories();
+    } finally {
+      Loader.hide();
+    }
   }
 
   @action
@@ -37,5 +58,21 @@ abstract class HomeControllerBase with Store, ControllerLifeCycle {
     if (address != null) {
       _addressEntity = address;
     }
+  }
+
+  @action
+  Future<void> _getCategories() async {
+    try {
+      final categories = await _supplierService.getCategories();
+      _listCategories = [...categories];
+    } catch (e) {
+      Messages.alert("Erro ao buscar as categorias");
+      throw Exception();
+    }
+  }
+
+  @action
+  void changeTabSupplier(SupplierPageType supplierPageType) {
+    _supplierPageTypeSelected = supplierPageType;
   }
 }

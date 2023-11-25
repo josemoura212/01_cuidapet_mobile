@@ -27,6 +27,43 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
+  late final _$_listCategoriesAtom =
+      Atom(name: 'HomeControllerBase._listCategories', context: context);
+
+  List<SupplierCategoryModel> get listCategories {
+    _$_listCategoriesAtom.reportRead();
+    return super._listCategories;
+  }
+
+  @override
+  List<SupplierCategoryModel> get _listCategories => listCategories;
+
+  @override
+  set _listCategories(List<SupplierCategoryModel> value) {
+    _$_listCategoriesAtom.reportWrite(value, super._listCategories, () {
+      super._listCategories = value;
+    });
+  }
+
+  late final _$_supplierPageTypeSelectedAtom = Atom(
+      name: 'HomeControllerBase._supplierPageTypeSelected', context: context);
+
+  SupplierPageType get supplierPageTypeSelected {
+    _$_supplierPageTypeSelectedAtom.reportRead();
+    return super._supplierPageTypeSelected;
+  }
+
+  @override
+  SupplierPageType get _supplierPageTypeSelected => supplierPageTypeSelected;
+
+  @override
+  set _supplierPageTypeSelected(SupplierPageType value) {
+    _$_supplierPageTypeSelectedAtom
+        .reportWrite(value, super._supplierPageTypeSelected, () {
+      super._supplierPageTypeSelected = value;
+    });
+  }
+
   late final _$_getAddressSelectedAsyncAction =
       AsyncAction('HomeControllerBase._getAddressSelected', context: context);
 
@@ -42,6 +79,28 @@ mixin _$HomeController on HomeControllerBase, Store {
   @override
   Future<void> goToAddressPage() {
     return _$goToAddressPageAsyncAction.run(() => super.goToAddressPage());
+  }
+
+  late final _$_getCategoriesAsyncAction =
+      AsyncAction('HomeControllerBase._getCategories', context: context);
+
+  @override
+  Future<void> _getCategories() {
+    return _$_getCategoriesAsyncAction.run(() => super._getCategories());
+  }
+
+  late final _$HomeControllerBaseActionController =
+      ActionController(name: 'HomeControllerBase', context: context);
+
+  @override
+  void changeTabSupplier(SupplierPageType supplierPageType) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.changeTabSupplier');
+    try {
+      return super.changeTabSupplier(supplierPageType);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
