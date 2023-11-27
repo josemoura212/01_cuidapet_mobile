@@ -11,7 +11,7 @@ class SupplierCoreModule extends Module {
             (i) => SupplierRepositoryImpl(restClient: i(), log: i()),
             export: true),
         Bind.lazySingleton<SupplierService>(
-            (i) => SupplierServiceImpl(supplierRepository: i()),
+            (i) => SupplierServiceImpl(repository: i()),
             export: true),
       ];
 }
