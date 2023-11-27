@@ -30,6 +30,14 @@ abstract class HomeControllerBase with Store, ControllerLifeCycle {
   @readonly
   var _listSuppliersByAddres = <SupplierNearbyMeModel>[];
 
+  var _listSuppliersByAddresCache = <SupplierNearbyMeModel>[];
+
+  @readonly
+  var _nameSearchText = "";
+
+  @readonly
+  SupplierCategoryModel? _supplierCategoryFilterSelected;
+
   late ReactionDisposer findSupplierReactionDisposer;
 
   HomeControllerBase(
@@ -99,9 +107,48 @@ abstract class HomeControllerBase with Store, ControllerLifeCycle {
     if (_addressEntity != null) {
       final suppliers = await _supplierService.findNearBy(_addressEntity!);
       _listSuppliersByAddres = [...suppliers];
+      _listSuppliersByAddresCache = [...suppliers];
+      filterSupplier();
     } else {
       Messages.alert(
           "Para realizar a busca de petshops você precisa selecionar um endereço");
     }
+  }
+
+  @action
+  void filterSupplierCategory(SupplierCategoryModel category) {
+    if (_supplierCategoryFilterSelected == category) {
+      _supplierCategoryFilterSelected = null;
+    } else {
+      _supplierCategoryFilterSelected = category;
+    }
+    filterSupplier();
+  }
+
+  @action
+  void filterSupplierByName(String name) {
+    _nameSearchText = name;
+    filterSupplier();
+  }
+
+  @action
+  void filterSupplier() {
+    var suppliers = [..._listSuppliersByAddresCache];
+
+    if (_supplierCategoryFilterSelected != null) {
+      suppliers = _listSuppliersByAddres
+          .where((supplier) =>
+              supplier.category == _supplierCategoryFilterSelected?.id)
+          .toList();
+    }
+
+    if (_nameSearchText.isNotEmpty) {
+      suppliers = suppliers
+          .where((supplier) => supplier.name
+              .toLowerCase()
+              .contains(_nameSearchText.toLowerCase()))
+          .toList();
+    }
+    _listSuppliersByAddres = [...suppliers];
   }
 }

@@ -1,23 +1,24 @@
 part of '../home_page.dart';
 
 class _HomeSupplierTab extends StatelessWidget {
-  final HomeController controller;
+  final HomeController _controller;
 
-  const _HomeSupplierTab({required this.controller});
+  const _HomeSupplierTab({required HomeController controller})
+      : _controller = controller;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _HomeTabHeader(controller: controller),
+        _HomeTabHeader(controller: _controller),
         Expanded(
           child: Observer(builder: (_) {
             return AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
               child:
-                  controller.supplierPageTypeSelected == SupplierPageType.list
-                      ? _HomeSupplierList(controller)
-                      : const _HomeSupplierGrid(),
+                  _controller.supplierPageTypeSelected == SupplierPageType.list
+                      ? _HomeSupplierList(_controller)
+                      : _HomeSupplierGrid(_controller),
             );
           }),
         ),
@@ -27,8 +28,9 @@ class _HomeSupplierTab extends StatelessWidget {
 }
 
 class _HomeTabHeader extends StatelessWidget {
-  final HomeController controller;
-  const _HomeTabHeader({required this.controller});
+  final HomeController _controller;
+  const _HomeTabHeader({required HomeController controller})
+      : _controller = controller;
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +42,25 @@ class _HomeTabHeader extends StatelessWidget {
           const Spacer(),
           Observer(builder: (_) {
             return InkWell(
-              onTap: () => controller.changeTabSupplier(SupplierPageType.list),
+              onTap: () => _controller.changeTabSupplier(SupplierPageType.list),
               child: Icon(
                 Icons.view_headline,
-                color:
-                    controller.supplierPageTypeSelected == SupplierPageType.list
-                        ? Colors.black
-                        : Colors.grey,
+                color: _controller.supplierPageTypeSelected ==
+                        SupplierPageType.list
+                    ? Colors.black
+                    : Colors.grey,
               ),
             );
           }),
           Observer(builder: (_) {
             return InkWell(
-              onTap: () => controller.changeTabSupplier(SupplierPageType.grid),
+              onTap: () => _controller.changeTabSupplier(SupplierPageType.grid),
               child: Icon(
                 Icons.view_compact,
-                color:
-                    controller.supplierPageTypeSelected == SupplierPageType.grid
-                        ? Colors.black
-                        : Colors.grey,
+                color: _controller.supplierPageTypeSelected ==
+                        SupplierPageType.grid
+                    ? Colors.black
+                    : Colors.grey,
               ),
             );
           }),
@@ -133,7 +135,7 @@ class _HomeSupplierListItemWidget extends StatelessWidget {
                               size: 16,
                             ),
                             Text(
-                                "${supplier.distance.toStringAsFixed(2)} km de distancia")
+                                "${supplier.distance.toStringAsFixed(2)} km de distância")
                           ],
                         ),
                       ],
@@ -183,10 +185,90 @@ class _HomeSupplierListItemWidget extends StatelessWidget {
 }
 
 class _HomeSupplierGrid extends StatelessWidget {
-  const _HomeSupplierGrid();
+  final HomeController _controller;
+  const _HomeSupplierGrid(this._controller);
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Supplier Grid");
+    return CustomScrollView(
+      slivers: [
+        Observer(builder: (_) {
+          return SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final supplier = _controller.listSuppliersByAddres[index];
+                return _HomeSupplierGridItemWidget(supplier);
+              },
+              childCount: 10,
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.1,
+            ),
+          );
+        }),
+      ],
+    );
+  }
+}
+
+class _HomeSupplierGridItemWidget extends StatelessWidget {
+  final SupplierNearbyMeModel supplier;
+  const _HomeSupplierGridItemWidget(this.supplier);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Card(
+          color: Colors.white,
+          margin:
+              const EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 10),
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: SizedBox.expand(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 40.0, left: 10, right: 10, bottom: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    supplier.name,
+                    style: context.textTheme.titleSmall,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    "${supplier.distance.toStringAsFixed(2)} km de distância",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.grey[300], //200
+          ),
+        ),
+        Positioned(
+          top: 5,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: CircleAvatar(
+              radius: 35,
+              backgroundImage: NetworkImage(supplier.logo),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
