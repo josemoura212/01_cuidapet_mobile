@@ -48,22 +48,24 @@ class _AddressSearchWidgetState extends State<_AddressSearchWidget> {
     return Material(
       elevation: 10,
       borderRadius: BorderRadius.circular(20),
-      child: TypeAheadFormField<PlaceModel>(
-        textFieldConfiguration: TextFieldConfiguration(
-          controller: _searchTextEC,
-          focusNode: _searchTextFN,
-          decoration: InputDecoration(
-            prefixIcon: const Icon(
-              Icons.location_on,
-              color: Colors.black,
+      child: TypeAheadField(
+        builder: (context, controller, focusNode) {
+          return TextField(
+            controller: controller,
+            focusNode: focusNode,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                Icons.location_on,
+                color: Colors.black,
+              ),
+              hintText: "Insira um endereço",
+              border: border,
+              disabledBorder: border,
+              enabledBorder: border,
             ),
-            hintText: "Insira um endereço",
-            border: border,
-            disabledBorder: border,
-            enabledBorder: border,
-          ),
-        ),
-        onSuggestionSelected: _onSuggestionSelected,
+          );
+        },
+        onSelected: _onSuggestionSelected,
         suggestionsCallback: _suggestionsCallback,
         itemBuilder: (_, item) {
           debugPrint("item : $item");
