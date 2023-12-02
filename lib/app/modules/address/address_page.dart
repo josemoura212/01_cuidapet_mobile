@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
+import 'package:cuidapet_mobile/app/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/life_cycle/page_life_cycle_state.dart';
 import 'package:cuidapet_mobile/app/core/mixins/location_mixin.dart';
 import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';

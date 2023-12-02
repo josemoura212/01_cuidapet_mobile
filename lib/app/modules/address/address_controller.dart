@@ -1,6 +1,6 @@
 // ignore_for_file: unused_field
 
-import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
+import 'package:cuidapet_mobile/app/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/life_cycle/controller_life_cycle.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/loader.dart';
 import 'package:cuidapet_mobile/app/core/ui/widgets/messages.dart';

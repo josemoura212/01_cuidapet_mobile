@@ -1,18 +1,29 @@
+import 'package:cuidapet_mobile/app/core/life_cycle/page_life_cycle_state.dart';
 import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
+import 'package:cuidapet_mobile/app/modules/supplier/supplier_controller.dart';
 import 'package:cuidapet_mobile/app/modules/supplier/widgets/supplier_detail.dart';
 import 'package:cuidapet_mobile/app/modules/supplier/widgets/supplier_service_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SupplierPage extends StatefulWidget {
-  const SupplierPage({super.key});
+  final int _supplierId;
+  const SupplierPage({
+    super.key,
+    required int supplierId,
+  }) : _supplierId = supplierId;
 
   @override
   State<SupplierPage> createState() => _SupplierPageState();
 }
 
-class _SupplierPageState extends State<SupplierPage> {
+class _SupplierPageState
+    extends PageLifeCycleState<SupplierController, SupplierPage> {
   late ScrollController _scrollController;
   final sliverCollapedVN = ValueNotifier(false);
+
+  @override
+  Map<String, dynamic>? get params => {"supplierId": widget._supplierId};
 
   @override
   void initState() {
@@ -38,64 +49,93 @@ class _SupplierPageState extends State<SupplierPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text("Fazer agendamento"),
-        icon: const Icon(Icons.schedule),
-        backgroundColor: context.primaryColor,
+      floatingActionButton: Observer(
+        builder: (_) {
+          return AnimatedOpacity(
+            opacity: controller.totalServicesSelected > 0 ? 1 : 0,
+            duration: const Duration(milliseconds: 500),
+            child: FloatingActionButton.extended(
+              onPressed: controller.goToSchedule,
+              label: const Text("Fazer agendamento"),
+              icon: const Icon(Icons.schedule),
+              backgroundColor: context.primaryColor,
+            ),
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 200,
-            pinned: true,
-            title: ValueListenableBuilder<bool>(
-                valueListenable: sliverCollapedVN,
-                builder: (context, sliverCollapVNValue, child) {
-                  return Visibility(
-                    visible: sliverCollapVNValue,
-                    child: const Text(
-                      "Clina Central ABC",
+      body: Observer(
+        builder: (_) {
+          final supplierModel = controller.supplierModel;
+          if (supplierModel == null) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: context.primaryColor,
+              ),
+            );
+          }
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 200,
+                pinned: true,
+                title: ValueListenableBuilder<bool>(
+                    valueListenable: sliverCollapedVN,
+                    builder: (context, sliverCollapVNValue, child) {
+                      return Visibility(
+                        visible: sliverCollapVNValue,
+                        child: Text(
+                          supplierModel.name,
+                        ),
+                      );
+                    }),
+                flexibleSpace: FlexibleSpaceBar(
+                  stretchModes: const [
+                    StretchMode.blurBackground,
+                    StretchMode.fadeTitle,
+                  ],
+                  background: Image.network(
+                    supplierModel.logo,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox.shrink(),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SupplierDetail(
+                  supplierModel: supplierModel,
+                  controller: controller,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Serviços (${controller.totalServicesSelected} Selecionado${controller.totalServicesSelected > 1 ? "s" : ""})",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
-                  );
-                }),
-            flexibleSpace: FlexibleSpaceBar(
-              stretchModes: const [
-                StretchMode.blurBackground,
-                StretchMode.fadeTitle,
-              ],
-              background: Image.network(
-                "https://blog.cobasi.com.br/wp-content/uploads/2021/03/cachorro-pastor-alemao-saiba-mais-sobre-a-raca-capa.png",
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox.shrink(),
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SupplierDetail(),
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Serviços (0 Selecionados)",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                textAlign: TextAlign.center,
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final service = controller.supplierServices[index];
+                    return SupplierServiceWidget(
+                      service: service,
+                      supplierController: controller,
+                    );
+                  },
+                  childCount: controller.supplierServices.length,
+                ),
               ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return const SupplierServiceWidget();
-              },
-              childCount: 200,
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

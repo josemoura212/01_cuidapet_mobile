@@ -1,4 +1,4 @@
-import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
+import 'package:cuidapet_mobile/app/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/helpers/constantes.dart';
 import 'package:cuidapet_mobile/app/core/local_storage/local_storage.dart';
 import 'package:cuidapet_mobile/app/models/place_model.dart';

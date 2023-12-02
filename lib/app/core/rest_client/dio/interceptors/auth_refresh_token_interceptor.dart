@@ -5,6 +5,7 @@ import 'package:cuidapet_mobile/app/core/helpers/constantes.dart';
 import 'package:cuidapet_mobile/app/core/local_storage/local_storage.dart';
 import 'package:cuidapet_mobile/app/core/logger/app_logger.dart';
 import 'package:cuidapet_mobile/app/core/rest_client/rest_client.dart';
+import 'package:cuidapet_mobile/app/core/rest_client/rest_client_exception.dart';
 import 'package:cuidapet_mobile/app/modules/core/auth/auth_store.dart';
 import 'package:dio/dio.dart';
 
@@ -67,20 +68,27 @@ class AuthRefreshTokenInterceptor extends Interceptor {
   }
 
   Future<void> _refreshToken(DioException err) async {
-    final refreshToken = await _localSecureStorage
-        .read(Constantes.LOCAL_SECURE_STORAGE_REFRESH_TOKEN_KEY);
+    try {
+      final refreshToken = await _localSecureStorage
+          .read(Constantes.LOCAL_SECURE_STORAGE_REFRESH_TOKEN_KEY);
 
-    if (refreshToken == null) {
+      if (refreshToken == null) {
+        throw ExpireTokenException();
+      }
+      final resultRefresh =
+          await _restClient.auth().put("/auth/refresh", data: {
+        "refresh_token": refreshToken,
+      });
+      await _localStorage.write<String>(
+          Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY,
+          resultRefresh.data["access_token"]);
+      await _localSecureStorage.write(
+          Constantes.LOCAL_SECURE_STORAGE_REFRESH_TOKEN_KEY,
+          resultRefresh.data["refresh_token"]);
+    } on RestClientException catch (e, s) {
+      _log.error("Erro ao tentar fazer refresh toekn", e, s);
       throw ExpireTokenException();
     }
-    final resultRefresh = await _restClient.auth().put("/auth/refresh", data: {
-      "refresh_token": refreshToken,
-    });
-    await _localStorage.write<String>(Constantes.LOCAL_STORAGE_ACCESS_TOKEN_KEY,
-        resultRefresh.data["access_token"]);
-    await _localSecureStorage.write(
-        Constantes.LOCAL_SECURE_STORAGE_REFRESH_TOKEN_KEY,
-        resultRefresh.data["refresh_token"]);
   }
 
   Future<void> _retryRequest(

@@ -68,3 +68,9 @@ flutter {
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 }
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile){
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+}

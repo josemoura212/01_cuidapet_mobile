@@ -1,4 +1,4 @@
-import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
+import 'package:cuidapet_mobile/app/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/models/place_model.dart';
 
 abstract class AddressService {

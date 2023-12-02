@@ -1,5 +1,5 @@
 import 'package:cuidapet_mobile/app/core/database/sqlite_connection_factory.dart';
-import 'package:cuidapet_mobile/app/core/entities/address_entity.dart';
+import 'package:cuidapet_mobile/app/entities/address_entity.dart';
 import 'package:cuidapet_mobile/app/core/exceptions/failure_exception.dart';
 import 'package:cuidapet_mobile/app/core/helpers/constantes.dart';
 import 'package:cuidapet_mobile/app/core/helpers/environments.dart';

@@ -19,7 +19,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   flutter_facebook_auth: ^6.0.3
   flutter_mobx: ^2.2.0
-  flutter_modular: "5.0.3"
+  flutter_modular: 5.0.3
   flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^9.0.0
   flutter_typeahead: ^5.0.1
@@ -27,14 +27,16 @@ dependencies:
   geolocator: ^10.1.0
   google_maps_flutter: ^2.5.0
   google_places_rest_api:
-    path: ../google_places_rest_api/
+    path: packages/google_places_rest_api/
   google_sign_in: ^6.1.6
+  intl: ^0.18.1
   logger: ^2.0.2+1
   mobx: ^2.2.1
   path: ^1.8.3
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
   synchronized: ^3.1.0
+  url_launcher: ^6.2.1
   validatorless: ^1.2.3
 
 dev_dependencies:
