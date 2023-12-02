@@ -16,5 +16,8 @@ class UiConfig {
             fontSize: 20,
           ),
         ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xffA8CE4B),
+        ),
       );
 }
