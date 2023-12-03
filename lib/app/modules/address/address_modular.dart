@@ -6,16 +6,17 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class AddressModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton((i) => AddressController(addressService: i())),
-        Bind.lazySingleton(
-          (i) => AddressSearchWidgetController(addressService: i()),
-        ),
-      ];
+  void binds(i) {
+    i.add((i) => AddressController.new, key: "AddressController");
+    i.add(
+      (i) => AddressSearchWidgetController.new,
+      key: "AddressSearchWidgetController",
+    );
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const AddressPage()),
-        ModuleRoute("/detail", module: AddressDetailModule())
-      ];
+  void routes(RouteManager r) {
+    r.child('/', child: (context) => const AddressPage());
+    r.module("/detail", module: AddressDetailModule());
+  }
 }

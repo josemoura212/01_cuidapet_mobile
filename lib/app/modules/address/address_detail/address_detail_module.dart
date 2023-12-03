@@ -5,21 +5,14 @@ import 'address_detail_page.dart';
 
 class AddressDetailModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton(
-          (i) => AddressDetailController(
-            addressService: i(),
-          ),
-        ),
-      ];
+  void binds(i) {
+    i.addLazySingleton((i) => AddressDetailController.new,
+        key: "AddressDetailController");
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          '/',
-          child: (context, args) => AddressDetailPage(
-            place: args.data,
-          ),
-        ),
-      ];
+  void routes(RouteManager r) {
+    final args = r.args;
+    r.child('/', child: (contex) => AddressDetailPage(place: args.data));
+  }
 }

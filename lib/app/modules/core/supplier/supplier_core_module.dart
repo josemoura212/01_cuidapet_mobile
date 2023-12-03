@@ -6,12 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class SupplierCoreModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton<SupplierRepository>(
-            (i) => SupplierRepositoryImpl(restClient: i(), log: i()),
-            export: true),
-        Bind.lazySingleton<SupplierService>(
-            (i) => SupplierServiceImpl(repository: i()),
-            export: true),
-      ];
+  void exportedBinds(i) => i
+    ..addLazySingleton<SupplierRepository>(SupplierRepositoryImpl.new)
+    ..addLazySingleton<SupplierService>(SupplierServiceImpl.new);
 }

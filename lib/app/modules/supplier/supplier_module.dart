@@ -6,14 +6,9 @@ import 'supplier_page.dart';
 
 class SupplierModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton(
-          (i) => SupplierController(
-            log: i(),
-            supplierService: i(),
-          ),
-        ),
-      ];
+  void binds(i) {
+    i.addLazySingleton(SupplierController.new);
+  }
 
   @override
   List<Module> get imports => [
@@ -21,12 +16,8 @@ class SupplierModule extends Module {
       ];
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          '/',
-          child: (context, args) => SupplierPage(
-            supplierId: args.data,
-          ),
-        ),
-      ];
+  void routes(RouteManager r) {
+    final args = r.args;
+    r.child('/', child: (context) => SupplierPage(supplierId: args.data));
+  }
 }

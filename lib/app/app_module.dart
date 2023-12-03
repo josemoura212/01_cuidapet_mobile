@@ -8,19 +8,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
   @override
-  List<Bind<Object>> get binds => [];
+  void routes(RouteManager r) => r
+    ..module("/auth/", module: AuthModule())
+    ..module("/home/", module: HomeModule())
+    ..module("/address/", module: AddressModule())
+    ..module("/supplier/", module: SupplierModule())
+    ..module("/schedules/", module: SchedulesModule());
 
   @override
   List<Module> get imports => [
         CoreModule(),
-      ];
-
-  @override
-  List<ModularRoute> get routes => [
-        ModuleRoute("/auth/", module: AuthModule()),
-        ModuleRoute("/home/", module: HomeModule()),
-        ModuleRoute("/address/", module: AddressModule()),
-        ModuleRoute("/supplier/", module: SupplierModule()),
-        ModuleRoute("/schedules/", module: SchedulesModule()),
       ];
 }

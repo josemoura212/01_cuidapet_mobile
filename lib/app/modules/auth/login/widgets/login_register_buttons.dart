@@ -1,11 +1,11 @@
 part of '../login_page.dart';
 
 class _LoginRegisterButtons extends StatelessWidget {
-  final controller = Modular.get<LoginController>();
-  _LoginRegisterButtons();
+  const _LoginRegisterButtons();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<LoginController>();
     return Wrap(
       spacing: 10,
       runSpacing: 10,

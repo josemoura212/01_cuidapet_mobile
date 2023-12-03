@@ -5,14 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton(
-          (i) => HomeController(
-            addressService: i(),
-            supplierService: i(),
-          ),
-        ),
-      ];
+  void binds(i) {
+    i.addLazySingleton((i) => HomeController.new);
+  }
 
   @override
   List<Module> get imports => [
@@ -20,7 +15,7 @@ class HomeModule extends Module {
       ];
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const HomePage()),
-      ];
+  void routes(RouteManager r) {
+    r.child('/', child: (context) => const HomePage());
+  }
 }

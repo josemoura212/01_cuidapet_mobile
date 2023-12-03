@@ -17,8 +17,10 @@ class UserRepositoryImpl implements UserRepository {
   final RestClient _restClient;
   final AppLogger _log;
 
-  UserRepositoryImpl({required RestClient restClient, required AppLogger log})
-      : _restClient = restClient,
+  UserRepositoryImpl({
+    required RestClient restClient,
+    required AppLogger log,
+  })  : _restClient = restClient,
         _log = log;
 
   @override

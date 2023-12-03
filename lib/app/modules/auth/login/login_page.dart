@@ -1,3 +1,4 @@
+import 'package:cuidapet_mobile/app/core/life_cycle/page_life_cycle_state.dart';
 import 'package:cuidapet_mobile/app/core/ui/extensions/size_screen_extensions.dart';
 import 'package:cuidapet_mobile/app/core/ui/extensions/theme_extension.dart';
 import 'package:cuidapet_mobile/app/core/ui/icons/cuidapet_icons.dart';
@@ -37,7 +38,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 8),
               const _OrSeparator(),
               const SizedBox(height: 8),
-              _LoginRegisterButtons()
+              const _LoginRegisterButtons()
             ],
           ),
         ),

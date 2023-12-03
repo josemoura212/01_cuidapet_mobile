@@ -34,14 +34,11 @@ class _AppWidgetState extends State<AppWidget> {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (_, __) => MaterialApp.router(
-        builder: (context, child) {
-          return Asuka.builder(context, child);
-        },
+        builder: Asuka.builder,
         debugShowCheckedModeBanner: false,
         title: UiConfig.title,
         theme: UiConfig.theme,
-        routerDelegate: Modular.routerDelegate,
-        routeInformationParser: Modular.routeInformationParser,
+        routerConfig: Modular.routerConfig,
       ),
     );
   }

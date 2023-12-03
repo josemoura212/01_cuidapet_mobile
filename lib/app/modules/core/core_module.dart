@@ -15,35 +15,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class CoreModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton((i) => SqliteConnectionFactory(), export: true),
-        Bind.lazySingleton<AppLogger>((i) => AppLoggerImpl(), export: true),
-        Bind.lazySingleton<LocalStorage>(
-            (i) => SharedPreferencesLocalStorageImpl(),
-            export: true),
-        Bind.lazySingleton<LocalSecureStorage>(
-            (i) => FlutterSecureStorageLocalStorageImpl(),
-            export: true),
-        Bind.lazySingleton<RestClient>(
-            (i) => DioRestClient(
-                localStorage: i(),
-                log: i(),
-                authStore: i(),
-                localSecureStorage: i()),
-            export: true),
-        Bind.lazySingleton<AddressRepository>(
-          (i) => AddressRepositoryImpl(sqliteConnectionFactory: i()),
-          export: true,
-        ),
-        Bind.lazySingleton<AddressService>(
-            (i) =>
-                AddressServiceImpl(addressRepository: i(), localStorage: i()),
-            export: true),
-        Bind.lazySingleton(
-            (i) => AuthStore(
-                localStorage: i(),
-                localSecureStorage: i(),
-                addressService: i()),
-            export: true),
-      ];
+  void exportedBinds(i) => i
+    ..addLazySingleton<SqliteConnectionFactory>(SqliteConnectionFactory.new)
+    ..addLazySingleton<AppLogger>(AppLoggerImpl.new)
+    ..addLazySingleton<LocalStorage>(SharedPreferencesLocalStorageImpl.new)
+    ..addLazySingleton<LocalSecureStorage>(
+        FlutterSecureStorageLocalStorageImpl.new)
+    ..addLazySingleton<RestClient>(DioRestClient.new)
+    ..addLazySingleton<AddressRepository>(AddressRepositoryImpl.new)
+    ..addLazySingleton<AddressService>(AddressServiceImpl.new)
+    ..addLazySingleton<AuthStore>(AuthStore.new);
 }

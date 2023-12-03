@@ -7,7 +7,7 @@ class _LoginForm extends StatefulWidget {
   State<_LoginForm> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<_LoginForm> {
+class _LoginFormState extends PageLifeCycleState<LoginController, _LoginForm> {
   final _loginEC = TextEditingController();
   final _passwordEC = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -21,8 +21,6 @@ class _LoginFormState extends State<_LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<LoginController>();
-
     return Form(
       key: _formKey,
       child: Column(

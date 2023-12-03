@@ -5,13 +5,9 @@ import 'register_page.dart';
 
 class RegisterModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.lazySingleton(
-            (i) => RegisterController(userServices: i(), log: i())),
-      ];
+  void binds(i) => i.add((i) => RegisterController.new);
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const RegisterPage()),
-      ];
+  void routes(RouteManager r) =>
+      r..child('/', child: (context) => const RegisterPage());
 }
